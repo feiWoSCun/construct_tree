@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="feiwoscun.construct_tree.mapper.TXkMapper">
+
+    <resultMap type="feiwoscun.construct_tree.entity.TXk" id="TXkMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="dm" column="dm" jdbcType="VARCHAR"/>
+        <result property="mc" column="mc" jdbcType="VARCHAR"/>
+        <result property="fdm" column="fdm" jdbcType="VARCHAR"/>
+        <result property="lx" column="lx" jdbcType="VARCHAR"/>
+        <result property="zjdm" column="zjdm" jdbcType="VARCHAR"/>
+        <result property="px" column="px" jdbcType="INTEGER"/>
+        <result property="sfsc" column="sfsc" jdbcType="VARCHAR"/>
+        <result property="scr" column="scr" jdbcType="VARCHAR"/>
+        <result property="scsj" column="scsj" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TXkMap">
+        select
+          id, dm, mc, fdm, lx, zjdm, px, sfsc, scr, scsj
+        from t_xk
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TXkMap">
+        select
+          id, dm, mc, fdm, lx, zjdm, px, sfsc, scr, scsj
+        from t_xk
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="dm != null and dm != ''">
+                and dm = #{dm}
+            </if>
+            <if test="mc != null and mc != ''">
+                and mc = #{mc}
+            </if>
+            <if test="fdm != null and fdm != ''">
+                and fdm = #{fdm}
+            </if>
+            <if test="lx != null and lx != ''">
+                and lx = #{lx}
+            </if>
+            <if test="zjdm != null and zjdm != ''">
+                and zjdm = #{zjdm}
+            </if>
+            <if test="px != null">
+                and px = #{px}
+            </if>
+            <if test="sfsc != null and sfsc != ''">
+                and sfsc = #{sfsc}
+            </if>
+            <if test="scr != null and scr != ''">
+                and scr = #{scr}
+            </if>
+            <if test="scsj != null">
+                and scsj = #{scsj}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from t_xk
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="dm != null and dm != ''">
+                and dm = #{dm}
+            </if>
+            <if test="mc != null and mc != ''">
+                and mc = #{mc}
+            </if>
+            <if test="fdm != null and fdm != ''">
+                and fdm = #{fdm}
+            </if>
+            <if test="lx != null and lx != ''">
+                and lx = #{lx}
+            </if>
+            <if test="zjdm != null and zjdm != ''">
+                and zjdm = #{zjdm}
+            </if>
+            <if test="px != null">
+                and px = #{px}
+            </if>
+            <if test="sfsc != null and sfsc != ''">
+                and sfsc = #{sfsc}
+            </if>
+            <if test="scr != null and scr != ''">
+                and scr = #{scr}
+            </if>
+            <if test="scsj != null">
+                and scsj = #{scsj}
+            </if>
+        </where>
+    </select>
+    <select id="getAll" resultType="feiwoscun.construct_tree.entity.TXk">
+select * from t_xk
+
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into t_xk(dm, mc, fdm, lx, zjdm, px, sfsc, scr, scsj)
+        values (#{dm}, #{mc}, #{fdm}, #{lx}, #{zjdm}, #{px}, #{sfsc}, #{scr}, #{scsj})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into t_xk(dm, mc, fdm, lx, zjdm, px, sfsc, scr, scsj)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.dm}, #{entity.mc}, #{entity.fdm}, #{entity.lx}, #{entity.zjdm}, #{entity.px}, #{entity.sfsc}, #{entity.scr}, #{entity.scsj})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into t_xk(dm, mc, fdm, lx, zjdm, px, sfsc, scr, scsj)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.dm}, #{entity.mc}, #{entity.fdm}, #{entity.lx}, #{entity.zjdm}, #{entity.px}, #{entity.sfsc}, #{entity.scr}, #{entity.scsj})
+        </foreach>
+        on duplicate key update
+        dm = values(dm),
+        mc = values(mc),
+        fdm = values(fdm),
+        lx = values(lx),
+        zjdm = values(zjdm),
+        px = values(px),
+        sfsc = values(sfsc),
+        scr = values(scr),
+        scsj = values(scsj)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update t_xk
+        <set>
+            <if test="dm != null and dm != ''">
+                dm = #{dm},
+            </if>
+            <if test="mc != null and mc != ''">
+                mc = #{mc},
+            </if>
+            <if test="fdm != null and fdm != ''">
+                fdm = #{fdm},
+            </if>
+            <if test="lx != null and lx != ''">
+                lx = #{lx},
+            </if>
+            <if test="zjdm != null and zjdm != ''">
+                zjdm = #{zjdm},
+            </if>
+            <if test="px != null">
+                px = #{px},
+            </if>
+            <if test="sfsc != null and sfsc != ''">
+                sfsc = #{sfsc},
+            </if>
+            <if test="scr != null and scr != ''">
+                scr = #{scr},
+            </if>
+            <if test="scsj != null">
+                scsj = #{scsj},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from t_xk where id = #{id}
+    </delete>
+
+</mapper>
+
